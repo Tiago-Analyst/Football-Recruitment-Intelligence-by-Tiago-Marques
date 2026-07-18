@@ -1,0 +1,40 @@
+{
+  "pipeline_run_id": "3a2f0cfa-75e5-4387-8054-79c675ad07da",
+  "status": "success",
+  "source_file": "C:\\Users\\tiago\\OneDrive\\Desktop\\Football-Recruitment-Intelligence\\data\\raw\\20260718\\transfermarkt-datasets.duckdb",
+  "source_hash": "1217a880b61d9abe9ac6a822ebeed64dee5d47eecf463b0178e818216cbfb208",
+  "source_metadata": {
+    "tables": [
+      "appearances",
+      "club_games",
+      "clubs",
+      "competitions",
+      "countries",
+      "game_events",
+      "game_lineups",
+      "games",
+      "national_teams",
+      "player_valuations",
+      "players",
+      "transfers",
+      "version"
+    ],
+    "record_counts": {
+      "appearances": 1894350,
+      "clubs": 796,
+      "competitions": 65,
+      "countries": 124,
+      "games": 88958,
+      "game_events": 1274469,
+      "player_valuations": 507815,
+      "players": 50149,
+      "transfers": 35139
+    },
+    "latest_game_date": "2026-07-06",
+    "latest_valuation_date": "2026-02-27",
+    "source_commit": "59fa295c51fc23466f3a71542f8bf3d1335daa83"
+  },
+  "database": "C:\\Users\\tiago\\OneDrive\\Desktop\\Football-Recruitment-Intelligence\\database\\football_recruitment.duckdb",
+  "exports": 39,
+  "duration_seconds": 5.17
+}

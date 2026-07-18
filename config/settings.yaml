@@ -1,0 +1,15 @@
+project_name: Football Recruitment & Development Intelligence
+database_path: database/football_recruitment.duckdb
+scope:
+  country: Portugal
+  primary_competition_id: PO1
+  portuguese_nationality: Portugal
+source_stale_after_days: 14
+request:
+  timeout_seconds: 600
+  retries: 3
+exports:
+  csv: true
+  parquet: true
+  encoding: utf-8
+

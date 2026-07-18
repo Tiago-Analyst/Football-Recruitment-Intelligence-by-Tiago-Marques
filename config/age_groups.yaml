@@ -1,0 +1,7 @@
+age_groups:
+  U19: {min_age: 0, max_age: 18}
+  U21: {min_age: 19, max_age: 20}
+  U23: {min_age: 21, max_age: 22}
+  Prime: {min_age: 23, max_age: 29}
+  Veteran: {min_age: 30, max_age: 99}
+

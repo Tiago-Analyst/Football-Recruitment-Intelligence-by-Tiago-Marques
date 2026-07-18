@@ -1,0 +1,11 @@
+competitions:
+  PO1:
+    name: Liga Portugal
+    country: Portugal
+    level: 1
+  PO2:
+    name: Liga Portugal 2
+    country: Portugal
+    level: 2
+    availability: not_available_in_primary_source
+

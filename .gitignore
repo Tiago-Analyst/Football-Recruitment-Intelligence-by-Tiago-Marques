@@ -1,0 +1,17 @@
+.env
+.venv/
+__pycache__/
+.pytest_cache/
+tests/.runtime/
+*.py[cod]
+*.duckdb.wal
+database/*.duckdb
+data/raw/*
+!data/raw/.gitkeep
+!data/raw/source_validation/
+data/raw/source_validation/*.duckdb
+output/logs/*
+output/powerbi/*
+output/reports/*
+!output/**/.gitkeep
+.streamlit/secrets.toml

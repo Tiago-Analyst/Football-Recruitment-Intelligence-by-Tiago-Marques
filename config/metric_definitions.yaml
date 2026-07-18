@@ -1,0 +1,14 @@
+metrics:
+  known_transfer_fee_eur:
+    definition: Sum of strictly positive reported transfer fees; zero is treated as unknown.
+  recruitment_age:
+    definition: Completed years between date of birth and transfer date.
+  u21_minutes_share:
+    definition: Minutes by players younger than 21 divided by all club minutes.
+  minutes_weighted_age:
+    definition: Sum of player age multiplied by minutes divided by total minutes.
+  development_index:
+    definition: Weighted percentile score from available youth usage components.
+  minute_concentration:
+    definition: Share of club-season minutes played by the five highest-minute players.
+

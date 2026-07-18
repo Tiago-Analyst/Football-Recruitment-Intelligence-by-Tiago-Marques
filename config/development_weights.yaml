@@ -1,0 +1,10 @@
+development_index:
+  description: Configurable directional indicator, not an objective ranking.
+  weights:
+    u21_minutes_share: 0.45
+    u23_minutes_share: 0.30
+    young_players_used: 0.25
+  unavailable_components:
+    value_growth: Source valuations cannot be attributed reliably to a club spell.
+    academy_integration: Academy-origin field is unavailable.
+

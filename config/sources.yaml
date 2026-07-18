@@ -1,0 +1,33 @@
+sources:
+  transfermarkt_datasets:
+    enabled: true
+    role: primary
+    url: https://pub-e682421888d945d684bcae8890b0ec20.r2.dev/data/transfermarkt-datasets.duckdb
+    project_url: https://github.com/dcaribou/transfermarkt-datasets
+    format: duckdb
+    authentication: none
+    licence: CC0-1.0
+    expected_tables:
+      - appearances
+      - clubs
+      - competitions
+      - countries
+      - games
+      - game_events
+      - player_valuations
+      - players
+      - transfers
+  openfootball:
+    enabled: false
+    role: researched_alternative
+    url: https://github.com/openfootball/europe/tree/master/portugal
+    format: football.txt
+    authentication: none
+    licence: CC0-1.0
+  football_data_org:
+    enabled: false
+    role: researched_alternative
+    url: https://api.football-data.org/v4
+    format: json
+    authentication: api_token_for_match_data
+    licence: provider_terms

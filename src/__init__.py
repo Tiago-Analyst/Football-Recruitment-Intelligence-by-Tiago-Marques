@@ -1,0 +1,2 @@
+"""Football Recruitment Intelligence package."""
+
