@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
-  "version": "29666817413",
-  "published_at": "2026-07-19T00:22:22.439909+00:00",
+  "version": "29667682756",
+  "published_at": "2026-07-19T00:53:47.391278+00:00",
   "filename": "football_recruitment.duckdb",
-  "size_bytes": 30420992,
-  "sha256": "94c089f844aa3766135fd80a6f862ce0fd41a867fbc4c5c33ca6ee374404018f",
+  "size_bytes": 31469568,
+  "sha256": "7cab640b0b02e007d6adb0148b4e9032e055a13fea8efab11322155065b7017f",
   "download_url": "https://github.com/Tiago-Analyst/Football-Recruitment-Intelligence-by-Tiago-Marques/releases/download/data-latest/football_recruitment.duckdb"
 }
