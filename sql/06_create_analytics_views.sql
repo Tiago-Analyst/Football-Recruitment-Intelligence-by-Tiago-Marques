@@ -83,6 +83,7 @@ FROM dim_players p
 LEFT JOIN dim_clubs c ON p.current_club_key = c.club_key
 LEFT JOIN latest_stats s ON p.player_key = s.player_key AND s.rn = 1
 WHERE p.nationality = 'Portugal'
+  AND p.last_season = (SELECT MAX(last_season) FROM dim_players)
   AND COALESCE(p.current_club_domestic_competition_id, '') <> 'PO1'
   AND p.current_club_key IS NOT NULL;
 
@@ -139,4 +140,3 @@ SELECT c.club_key, c.club_name, r.recruitment_profile, s.selling_profile,
        'Profiles use documented thresholds and available fields only.' AS profile_note
 FROM dim_clubs c LEFT JOIN r USING (club_key) LEFT JOIN s USING (club_key)
 WHERE c.domestic_competition_id = 'PO1';
-

@@ -91,4 +91,9 @@ SELECT CURRENT_DATE AS snapshot_date, p.current_club_key AS club_key, p.player_k
             WHEN p.contract_expiration_date <= CURRENT_DATE + INTERVAL 365 DAY THEN 'Expires within 12 months'
             ELSE 'Beyond 12 months' END AS contract_status
 FROM dim_players p
-WHERE p.current_club_domestic_competition_id = 'PO1';
+WHERE p.current_club_domestic_competition_id = 'PO1'
+  AND p.last_season = (SELECT MAX(last_season) FROM dim_players)
+  AND p.current_club_key IN (
+      SELECT club_key FROM dim_clubs
+      WHERE last_season = (SELECT MAX(last_season) FROM dim_clubs)
+  );

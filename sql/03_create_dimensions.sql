@@ -14,7 +14,7 @@ FROM raw.competitions;
 CREATE TABLE dim_clubs AS
 WITH source_clubs AS (
     SELECT TRY_CAST(club_id AS BIGINT) AS source_club_id, name AS club_name,
-           domestic_competition_id, squad_size, average_age, stadium_name,
+           domestic_competition_id, squad_size, average_age, stadium_name, last_season,
            ROW_NUMBER() OVER (PARTITION BY TRY_CAST(club_id AS BIGINT) ORDER BY name) AS rn
     FROM raw.clubs
 ), transfer_clubs AS (
@@ -28,7 +28,7 @@ WITH source_clubs AS (
 ), all_clubs AS (
     SELECT * FROM source_clubs
     UNION ALL
-    SELECT t.source_club_id, t.club_name, NULL, NULL, NULL, NULL, 1
+    SELECT t.source_club_id, t.club_name, NULL, NULL, NULL, NULL, NULL, 1
     FROM transfer_clubs t
     WHERE NOT EXISTS (
         SELECT 1 FROM source_clubs c
@@ -36,14 +36,14 @@ WITH source_clubs AS (
     )
 )
 SELECT source_club_id AS club_key, source_club_id, club_name, domestic_competition_id,
-       c.country_name, squad_size, average_age, stadium_name
+       c.country_name, squad_size, average_age, stadium_name, last_season
 FROM all_clubs a
 LEFT JOIN raw.competitions c ON a.domestic_competition_id = c.competition_id
 WHERE rn = 1 AND source_club_id IS NOT NULL;
 
 CREATE TABLE dim_players AS
 WITH player_base AS (
-    SELECT player_id, name, first_name, last_name, CAST(date_of_birth AS DATE) AS date_of_birth,
+    SELECT player_id, last_season, name, first_name, last_name, CAST(date_of_birth AS DATE) AS date_of_birth,
            country_of_birth, country_of_citizenship, position, sub_position, foot, height_in_cm,
            TRY_CAST(current_club_id AS BIGINT) AS current_club_id,
            current_club_name, current_club_domestic_competition_id,
@@ -51,13 +51,13 @@ WITH player_base AS (
            market_value_in_eur, highest_market_value_in_eur, image_url, url
     FROM raw.players
 ), transfer_only AS (
-    SELECT t.player_id, ANY_VALUE(t.player_name), NULL, NULL, NULL, NULL, NULL, NULL, NULL,
+    SELECT t.player_id, NULL, ANY_VALUE(t.player_name), NULL, NULL, NULL, NULL, NULL, NULL, NULL,
            NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL
     FROM raw.transfers t
     WHERE NOT EXISTS (SELECT 1 FROM player_base p WHERE p.player_id = t.player_id)
     GROUP BY t.player_id
 )
-SELECT player_id AS player_key, player_id AS source_player_id, name, first_name, last_name,
+SELECT player_id AS player_key, player_id AS source_player_id, last_season, name, first_name, last_name,
        date_of_birth, country_of_birth, country_of_citizenship AS nationality,
        position, sub_position, foot, height_in_cm, current_club_id AS current_club_key,
        current_club_name, current_club_domestic_competition_id,

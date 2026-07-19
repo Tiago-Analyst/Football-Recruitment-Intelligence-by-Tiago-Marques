@@ -1,6 +1,7 @@
 """Methodology, provenance and data-quality page."""
 import streamlit as st
 
+from app.components.cards import format_refresh_time
 from app.components.navigation import configure_page, page_header
 from app.data import query, require_database
 from app.i18n import category, is_portuguese, tr
@@ -18,7 +19,7 @@ require_database()
 refresh = query("SELECT * FROM powerbi_last_refresh")
 quality = query("SELECT rule_name, severity, status, issue_count, checked_at FROM data_quality_results ORDER BY severity, rule_name")
 if not refresh.empty:
-    st.success(f"{tr('Last refresh', 'Última atualização')}: {refresh.iloc[0].last_refresh} · {tr('Source', 'Fonte')}: {refresh.iloc[0].source_name}")
+    st.success(f"{tr('Last refresh', 'Última atualização')}: {format_refresh_time(refresh.iloc[0].last_refresh)} · {tr('Source', 'Fonte')}: {refresh.iloc[0].source_name}")
 
 tabs = st.tabs([
     tr("Sources", "Fontes"),
@@ -60,12 +61,14 @@ with tabs[2]:
     - **U21/U23 minute share:** youth minutes divided by all recorded club minutes.
     - **Development Index:** 45% U21 minute share + 30% U23 minute share + 25% capped U23-player breadth.
     - **Squad alert thresholds:** 450 meaningful minutes; top-five concentration warning at 55%; position-age warning at 29.
+    - **Latest-source rosters:** only players and clubs whose last source season matches the latest available season.
     """, """
     - **Valores declarados:** valores estritamente positivos na fonte; zero torna-se nulo/desconhecido.
     - **Idade:** anos completos na data da transferência ou do jogo.
     - **Percentagem de minutos Sub-21/Sub-23:** minutos dos jovens divididos por todos os minutos registados pelo clube.
     - **Índice de Desenvolvimento:** 45% de minutos Sub-21 + 30% de minutos Sub-23 + 25% da amplitude limitada de jogadores Sub-23.
     - **Limites dos alertas do plantel:** 450 minutos relevantes; alerta de concentração dos cinco principais aos 55%; alerta de idade por posição aos 29 anos.
+    - **Plantéis na fonte mais recente:** apenas jogadores e clubes cuja última época na fonte corresponde à época mais recente disponível.
     """))
 with tabs[3]:
     if is_portuguese():

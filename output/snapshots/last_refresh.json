@@ -1,7 +1,7 @@
 {
-  "pipeline_run_id": "3a2f0cfa-75e5-4387-8054-79c675ad07da",
+  "pipeline_run_id": "1d58ff57-23a7-4097-8ef0-9d75fc36983d",
   "status": "success",
-  "source_file": "C:\\Users\\tiago\\OneDrive\\Desktop\\Football-Recruitment-Intelligence\\data\\raw\\20260718\\transfermarkt-datasets.duckdb",
+  "source_file": "data/raw/20260719/transfermarkt-datasets.duckdb",
   "source_hash": "1217a880b61d9abe9ac6a822ebeed64dee5d47eecf463b0178e818216cbfb208",
   "source_metadata": {
     "tables": [
@@ -34,7 +34,7 @@
     "latest_valuation_date": "2026-02-27",
     "source_commit": "59fa295c51fc23466f3a71542f8bf3d1335daa83"
   },
-  "database": "C:\\Users\\tiago\\OneDrive\\Desktop\\Football-Recruitment-Intelligence\\database\\football_recruitment.duckdb",
+  "database": "database/football_recruitment.duckdb",
   "exports": 39,
-  "duration_seconds": 5.17
+  "duration_seconds": 16.05
 }

@@ -54,6 +54,21 @@ def quality_results(connection: duckdb.DuckDBPyConnection) -> pd.DataFrame:
         ("negative_minutes", "critical", "SELECT COUNT(*) FROM fact_player_appearances WHERE minutes_played < 0"),
         ("duplicate_appearance", "critical", "SELECT COUNT(*)-COUNT(DISTINCT appearance_id) FROM fact_player_appearances"),
         ("negative_market_value", "critical", "SELECT COUNT(*) FROM fact_player_valuations WHERE market_value_eur < 0"),
+        (
+            "stale_player_in_squad_snapshot",
+            "critical",
+            "SELECT COUNT(*) FROM fact_squad_snapshots s JOIN dim_players p USING(player_key) WHERE p.last_season <> (SELECT MAX(last_season) FROM dim_players)",
+        ),
+        (
+            "stale_club_in_squad_snapshot",
+            "critical",
+            "SELECT COUNT(*) FROM fact_squad_snapshots s JOIN dim_clubs c USING(club_key) WHERE c.last_season <> (SELECT MAX(last_season) FROM dim_clubs)",
+        ),
+        (
+            "stale_portuguese_player_abroad",
+            "critical",
+            "SELECT COUNT(*) FROM portuguese_players_abroad a JOIN dim_players p USING(player_key) WHERE p.last_season <> (SELECT MAX(last_season) FROM dim_players)",
+        ),
         ("future_transfer", "warning", "SELECT COUNT(*) FROM fact_transfers WHERE transfer_date > CURRENT_DATE"),
         ("unknown_transfer_fee", "warning", "SELECT COUNT(*) FROM fact_transfers WHERE transfer_fee_eur IS NULL"),
         ("unavailable_loan_type", "warning", "SELECT COUNT(*) FROM fact_transfers WHERE transfer_type_key = 1"),

@@ -1,5 +1,11 @@
 # Football Recruitment & Development Intelligence
 
+[![Open the live dashboard](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://fri-tiago-marques.streamlit.app/)
+[![Tests](https://github.com/Tiago-Analyst/Football-Recruitment-Intelligence-by-Tiago-Marques/actions/workflows/tests.yml/badge.svg)](https://github.com/Tiago-Analyst/Football-Recruitment-Intelligence-by-Tiago-Marques/actions/workflows/tests.yml)
+[![Data refresh](https://github.com/Tiago-Analyst/Football-Recruitment-Intelligence-by-Tiago-Marques/actions/workflows/refresh_data.yml/badge.svg)](https://github.com/Tiago-Analyst/Football-Recruitment-Intelligence-by-Tiago-Marques/actions/workflows/refresh_data.yml)
+
+**[Explore the live bilingual dashboard](https://fri-tiago-marques.streamlit.app/)** · English and Portuguese (Portugal)
+
 A reproducible football analytics portfolio project that examines how Portuguese clubs recruit players, provide development minutes, structure squads, create market value and sell into other leagues. It is built as decision support for sporting directors, recruitment and scouting teams, academy/loan managers, executives and analysts—not as a goals-and-league-table dashboard.
 
 ## Business question
@@ -97,15 +103,13 @@ GitHub Actions runs lint/tests on pushes and pull requests. A scheduled workflow
 
 UTF-8 CSV and Parquet exports are written to `output/powerbi/`. Import dimensions first, then facts, and use single-direction one-to-many filters. Full relationship and measure guidance is in [Power BI setup](docs/powerbi_setup.md).
 
-## Screenshots
+## Portfolio highlights
 
-Add portfolio screenshots here after deploying the Streamlit application:
-
-- Market overview and source/fee caveat
-- Club recruitment profile
-- Development Index comparison
-- Transfer pathway Sankey
-- Squad alerts and player profile
+- End-to-end Python/SQL ETL from a weekly CC0 source to a dimensional DuckDB warehouse.
+- Automated quality gates, SHA-256 verification, GitHub Releases and cloud refreshes.
+- Eleven decision-support modules plus transparent methodology and controlled unavailable states.
+- Bilingual Streamlit interface with interactive filters, Plotly visualisations and downloadable tables.
+- Power BI-ready CSV and Parquet exports generated from the same governed analytics model.
 
 ## Evidence boundaries and limitations
 
@@ -124,3 +128,9 @@ Add portfolio screenshots here after deploying the Streamlit application:
 - Introduce controlled review workflows for cross-source matching.
 - Add competition-strength reference data and club-spell-aware value attribution.
 - Deploy snapshots so strategic changes can be compared over refreshes.
+
+## Author
+
+Developed by **Tiago Marques**, Data Engineer and Business Intelligence professional with an interest in football analytics, scouting and performance analysis.
+
+[LinkedIn](https://www.linkedin.com/in/tiagomarques-/) · [Email](mailto:tiagoamarcolino@gmail.com) · [Live dashboard](https://fri-tiago-marques.streamlit.app/)

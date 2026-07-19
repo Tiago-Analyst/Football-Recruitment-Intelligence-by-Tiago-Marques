@@ -21,7 +21,16 @@ search = st.sidebar.text_input(tr("Search player", "Pesquisar jogador"), "")
 if len(search) >= 2:
     players = query("SELECT player_key, name, current_club_name FROM dim_players WHERE name ILIKE ? ORDER BY name LIMIT 100", (f"%{search}%",))
 else:
-    players = query("SELECT DISTINCT p.player_key, p.name, p.current_club_name FROM dim_players p JOIN fact_player_appearances a USING(player_key) ORDER BY p.name LIMIT 500")
+    players = query("""
+        SELECT p.player_key, p.name, p.current_club_name
+        FROM dim_players p
+        JOIN dim_clubs c ON p.current_club_key = c.club_key
+        WHERE p.last_season = (SELECT MAX(last_season) FROM dim_players)
+          AND c.last_season = (SELECT MAX(last_season) FROM dim_clubs)
+          AND p.current_club_domestic_competition_id = 'PO1'
+        ORDER BY p.market_value_in_eur DESC NULLS LAST, p.name
+        LIMIT 500
+    """)
 if players.empty:
     st.warning(tr("No player found.", "Nenhum jogador encontrado."))
     st.stop()

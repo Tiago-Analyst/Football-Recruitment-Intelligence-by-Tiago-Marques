@@ -2,10 +2,19 @@
 from __future__ import annotations
 
 import math
+from datetime import timezone
 
 import streamlit as st
 
 from app.i18n import tr
+
+
+def format_refresh_time(value: object) -> str:
+    """Format a warehouse timestamp consistently in UTC without microseconds."""
+    timestamp = value.to_pydatetime() if hasattr(value, "to_pydatetime") else value
+    if hasattr(timestamp, "astimezone"):
+        timestamp = timestamp.astimezone(timezone.utc)
+    return timestamp.strftime("%Y-%m-%d %H:%M UTC")
 
 
 def compact_number(value: float | int | None, currency: bool = False) -> str:

@@ -102,10 +102,10 @@ def run_pipeline(source_file: Path | None = None, download: bool = True) -> dict
     metadata = {
         "pipeline_run_id": run_id,
         "status": "success",
-        "source_file": str(raw_path),
+        "source_file": raw_path.relative_to(project_path()).as_posix(),
         "source_hash": digest,
         "source_metadata": source_metadata,
-        "database": str(database_path),
+        "database": database_path.relative_to(project_path()).as_posix(),
         "exports": len(written),
         "duration_seconds": round(time.perf_counter() - started_clock, 2),
     }
@@ -114,4 +114,3 @@ def run_pipeline(source_file: Path | None = None, download: bool = True) -> dict
     snapshot.write_text(json.dumps(metadata, default=str, indent=2), encoding="utf-8")
     LOGGER.info("Pipeline %s completed in %.2fs", run_id, metadata["duration_seconds"])
     return metadata
-

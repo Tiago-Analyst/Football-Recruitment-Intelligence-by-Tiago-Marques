@@ -12,8 +12,8 @@ configure_page(tr("Squad Planning", "Planeamento do Plantel"), "🧩")
 page_header(
     tr("Squad Planning & Age Structure", "Planeamento do Plantel e Estrutura Etária"),
     tr(
-        "Current roster age/value structure plus recent minutes-based depth and concentration alerts.",
-        "Estrutura atual de idade e valor do plantel, com alertas recentes de profundidade e concentração baseados em minutos.",
+        "Latest-source roster age/value structure plus recent minutes-based depth and concentration alerts.",
+        "Estrutura de idade e valor do plantel na versão mais recente da fonte, com alertas recentes de profundidade e concentração baseados em minutos.",
     ),
 )
 require_database()
@@ -48,11 +48,15 @@ else:
         alerts["severity"] = alerts["severity"].map(category)
         alerts = alerts.rename(columns={"context": "contexto", "alert_type": "tipo_alerta", "alert_message": "mensagem_alerta", "severity": "gravidade"})
     st.dataframe(alerts, use_container_width=True, hide_index=True)
-st.subheader(tr("Current roster snapshot", "Retrato atual do plantel"))
+st.subheader(tr("Latest-source roster snapshot", "Retrato do plantel na fonte mais recente"))
 squad_table = squad[["player", "age", "position_label", "sub_position", "market_value_eur", "contract_expiration_date", "contract_status"]].sort_values(["position_label", "age"])
 if is_portuguese():
     squad_table["contract_status"] = squad_table["contract_status"].map(category)
     squad_table = squad_table.rename(columns={"player": "jogador", "age": "idade", "position_label": "posição", "sub_position": "subposição", "market_value_eur": "valor_mercado_eur", "contract_expiration_date": "fim_contrato", "contract_status": "estado_contrato"})
 st.dataframe(squad_table, use_container_width=True, hide_index=True)
+st.caption(tr(
+    "The roster includes players and clubs whose last source season matches the latest available season.",
+    "O plantel inclui jogadores e clubes cuja última época na fonte corresponde à época mais recente disponível.",
+))
 st.caption(tr("Contract status uses the source's current profile field. It is not historical and should be revalidated before operational decisions.", "O estado contratual utiliza o campo atual do perfil na fonte. Não é histórico e deve ser novamente validado antes de decisões operacionais."))
 source_caption()

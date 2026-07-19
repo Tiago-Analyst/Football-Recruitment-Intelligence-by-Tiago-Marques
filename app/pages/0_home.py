@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import streamlit as st
 
+from app.components.cards import format_refresh_time
 from app.components.navigation import configure_page, page_header
 from app.data import query, require_database
 from app.i18n import tr
@@ -26,7 +27,7 @@ players = query("SELECT COUNT(DISTINCT player_key) AS n FROM fact_player_appeara
 transfers = query("SELECT COUNT(*) AS n FROM fact_transfers WHERE transfer_date<=CURRENT_DATE").iloc[0, 0]
 
 c1, c2, c3 = st.columns(3)
-c1.metric(tr("Portuguese clubs tracked", "Clubes portugueses acompanhados"), f"{clubs:,}")
+c1.metric(tr("Portuguese clubs in historical scope", "Clubes portugueses no histórico analisado"), f"{clubs:,}")
 c2.metric(tr("Players observed", "Jogadores observados"), f"{players:,}")
 c3.metric(tr("Transfers in scope", "Transferências analisadas"), f"{transfers:,}")
 
@@ -58,7 +59,7 @@ st.info(
 if not refresh.empty:
     st.caption(
         tr("Latest pipeline refresh", "Última atualização do pipeline")
-        + f": {refresh.iloc[0]['last_refresh']} · "
+        + f": {format_refresh_time(refresh.iloc[0]['last_refresh'])} · "
         + tr("Source", "Fonte")
         + f": {refresh.iloc[0]['source_name']}"
     )
