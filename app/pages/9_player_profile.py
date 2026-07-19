@@ -22,12 +22,10 @@ if len(search) >= 2:
     players = query("SELECT player_key, name, current_club_name FROM dim_players WHERE name ILIKE ? ORDER BY name LIMIT 100", (f"%{search}%",))
 else:
     players = query("""
-        SELECT p.player_key, p.name, p.current_club_name
-        FROM dim_players p
-        JOIN dim_clubs c ON p.current_club_key = c.club_key
-        WHERE p.last_season = (SELECT MAX(last_season) FROM dim_players)
-          AND c.last_season = (SELECT MAX(last_season) FROM dim_clubs)
-          AND p.current_club_domestic_competition_id = 'PO1'
+        SELECT DISTINCT p.player_key, p.name, p.current_club_name,
+               p.market_value_in_eur
+        FROM fact_squad_snapshots s
+        JOIN dim_players p USING(player_key)
         ORDER BY p.market_value_in_eur DESC NULLS LAST, p.name
         LIMIT 500
     """)
