@@ -89,9 +89,9 @@ python -m pytest
 python -m ruff check .
 ```
 
-## Automation
+## Automation and public deployment
 
-GitHub Actions runs lint/tests on pushes and pull requests. A scheduled workflow refreshes the source weekly, rebuilds the database, validates the result and uploads reports/exports as artifacts. Local Windows scheduling is documented in [automation](docs/automation.md).
+GitHub Actions runs lint/tests on pushes and pull requests. A scheduled workflow refreshes the source weekly, rebuilds and validates the database, publishes the latest trustworthy DuckDB warehouse as a GitHub Release asset and updates the small version manifest consumed by Streamlit. A failed refresh leaves the previous public warehouse active. See [public deployment](docs/deployment.md) and [local automation](docs/automation.md).
 
 ## Power BI
 

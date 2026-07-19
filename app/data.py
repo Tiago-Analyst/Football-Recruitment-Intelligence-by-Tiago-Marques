@@ -8,27 +8,36 @@ import pandas as pd
 import streamlit as st
 
 from app.i18n import tr
+from app.warehouse import WarehouseUnavailable, resolve_database
 
-ROOT = Path(__file__).resolve().parents[1]
-DATABASE = ROOT / "database" / "football_recruitment.duckdb"
+
+@st.cache_resource(ttl=3600, show_spinner=False)
+def database_path() -> Path:
+    """Return the local development DB or a verified published warehouse."""
+    return resolve_database()
 
 
 @st.cache_data(ttl=600)
 def query(sql: str, parameters: tuple[object, ...] = ()) -> pd.DataFrame:
     """Run a cached parameterised read-only query."""
-    if not DATABASE.exists():
+    try:
+        warehouse = database_path()
+    except WarehouseUnavailable:
         return pd.DataFrame()
-    with duckdb.connect(str(DATABASE), read_only=True) as connection:
+    with duckdb.connect(str(warehouse), read_only=True) as connection:
         return connection.execute(sql, list(parameters)).fetchdf()
 
 
 def require_database() -> None:
-    """Stop a page with a useful setup instruction when no warehouse exists."""
-    if not DATABASE.exists():
+    """Stop a page with a useful local or deployment setup error."""
+    try:
+        database_path()
+    except WarehouseUnavailable as exc:
         st.error(
             tr(
-                "Warehouse not found. Run `python scripts/10_run_full_pipeline.py` first.",
-                "Base de dados não encontrada. Execute primeiro `python scripts/10_run_full_pipeline.py`.",
+                "The analytics warehouse is temporarily unavailable. Check the latest data refresh or run `python scripts/10_run_full_pipeline.py` locally.",
+                "A base analítica está temporariamente indisponível. Verifique a atualização de dados mais recente ou execute localmente `python scripts/10_run_full_pipeline.py`.",
             )
         )
+        st.caption(str(exc))
         st.stop()
