@@ -1,9 +1,18 @@
 """Bilingual application router."""
 from __future__ import annotations
 
-import streamlit as st
+import sys
+from pathlib import Path
 
-from app.i18n import language_selector, tr
+# Streamlit Community Cloud executes this entrypoint from inside ``app``.
+# Add the repository root so absolute ``app.*`` and ``src.*`` imports resolve.
+ROOT = Path(__file__).resolve().parents[1]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+
+import streamlit as st  # noqa: E402
+
+from app.i18n import language_selector, tr  # noqa: E402
 
 st.set_page_config(
     page_title="Football Recruitment Intelligence",
